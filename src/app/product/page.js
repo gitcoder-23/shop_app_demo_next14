@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "./ProductPage.module.css";
+import { storeBaseUrl } from "../config";
 
 const ProductPage = () => {
   const [product, setProduct] = useState(null);
@@ -13,7 +14,7 @@ const ProductPage = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://fakestoreapi.com/products/1`)
+      .get(`${storeBaseUrl}/products/1`)
       .then((response) => {
         setProduct(response.data);
         setLoading(false);
@@ -38,7 +39,7 @@ const ProductPage = () => {
     setLoading(true);
     setError(null);
     axios
-      .get(`https://fakestoreapi.com/products/${productInputId}`)
+      .get(`${storeBaseUrl}/products/${productInputId}`)
       .then((response) => {
         setProduct(response.data);
         setLoading(false);
@@ -55,16 +56,16 @@ const ProductPage = () => {
   return (
     <div className={styles.productPage}>
       <Head>
-        <title>{product.title}</title>
-        <meta name="description" content={product.description} />
+        <title>{product?.title}</title>
+        <meta name="description" content={product?.description} />
 
         <meta property="og:type" content="product" />
-        <meta property="og:title" content={product.title} />
-        <meta property="og:description" content={product.description} />
-        <meta property="og:image" content={product.image} />
+        <meta property="og:title" content={product?.title} />
+        <meta property="og:description" content={product?.description} />
+        <meta property="og:image" content={product?.image} />
         <meta
           property="og:url"
-          content={`https://fakestoreapi.com/products/${
+          content={`${storeBaseUrl}/products/${
             productInputId !== "" ? productInputId : 1
           }`}
         />
@@ -99,17 +100,17 @@ const ProductPage = () => {
         <div className={styles.productContainer}>
           <div className={styles.imageContainer}>
             <img
-              src={product.image}
-              alt={product.title}
+              src={product?.image}
+              alt={product?.title}
               className={styles.image}
             />
           </div>
           <div className={styles.detailsContainer}>
-            <h1>{product.title}</h1>
-            <p>{product.description}</p>
-            <h2>Price: ${product.price}</h2>
-            <p>Rating: {product.rating.rate} / 5</p>
-            <p>Rated by {product.rating.count} users</p>
+            <h1>{product?.title}</h1>
+            <p>{product?.description}</p>
+            <h2>Price: ${product?.price}</h2>
+            <p>Rating: {product?.rating.rate} / 5</p>
+            <p>Rated by {product?.rating.count} users</p>
           </div>
         </div>
       )}
